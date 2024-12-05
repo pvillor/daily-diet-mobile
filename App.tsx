@@ -1,4 +1,4 @@
-import { ActivityIndicator, Text } from 'react-native';
+import { ActivityIndicator, StatusBar, Text } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
 import { NunitoSans_400Regular, NunitoSans_700Bold, useFonts } from '@expo-google-fonts/nunito-sans'
 
@@ -10,6 +10,11 @@ export function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
       {!isFontsLoaded ? <Text>Link Start</Text> : <Loading />}
     </ThemeProvider>
   );
