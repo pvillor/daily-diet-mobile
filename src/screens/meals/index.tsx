@@ -4,6 +4,7 @@ import { Avatar, Container, DietSummaryPercentage, DietSummary, Header, DietSumm
 import logo from "@assets/logo.png";
 import ore from "@assets/ore.png";
 import { Plus } from "phosphor-react-native";
+import { Meal } from "@components/meal";
 
 export function Meals() {
   return (
@@ -36,8 +37,7 @@ export function Meals() {
           data={['meal', 'meal2', 'meal3']}
           keyExtractor={item => item}
           renderItem={({ item }) => (
-            // <Meal meal={item} />
-            <Text>{item}</Text>
+            <Meal meal={item} />
           )}
         />
       </View>
