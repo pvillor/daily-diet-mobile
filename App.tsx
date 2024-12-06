@@ -1,9 +1,10 @@
-import { ActivityIndicator, StatusBar, Text } from 'react-native';
+import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
-import { NunitoSans_400Regular, NunitoSans_700Bold, useFonts } from '@expo-google-fonts/nunito-sans'
+import { NunitoSans_400Regular, NunitoSans_700Bold, useFonts } from '@expo-google-fonts/nunito-sans';
 
 import theme from '@theme/index';
 import { Loading } from '@components/loading';
+import { Meals } from '@screens/meals';
 
 export function App() {
   const [isFontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold })
@@ -15,7 +16,7 @@ export function App() {
         backgroundColor="transparent"
         translucent
       />
-      {!isFontsLoaded ? <Text>Link Start</Text> : <Loading />}
+      {isFontsLoaded ? <Meals /> : <Loading />}
     </ThemeProvider>
   );
 }
