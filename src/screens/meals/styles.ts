@@ -1,15 +1,15 @@
 import styled from "styled-components/native";
 import { ArrowUpRight } from "phosphor-react-native";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export const Container = styled.View`
+export const Container = styled(SafeAreaView)`
   flex: 1;
 
-  padding: 0 24px;
+  padding: 24px;
   background-color: ${({ theme }) => theme.COLORS.GRAY_100};
 `
 
-export const Header = styled(SafeAreaView)`
+export const Header = styled.View`
   width: 100%;
 
   flex-direction: row;
