@@ -1,14 +1,10 @@
-import { Container, Count, CountContainer, CountDescription, Details, DietMealsDetails, ExitSummaryIcon, GeneralStatistics, Header, SummaryDescription, SummaryPercentage, Title } from "./styles";
+import { Header } from "@components/header";
+import { Container, Count, CountContainer, CountDescription, Details, DietMealsDetails, GeneralStatistics, Title } from "./styles";
 
 export function Summary() {
   return (
-    <Container isFollowingDiet={false}>
-      <Header>
-        <ExitSummaryIcon isFollowingDiet={false} />
-
-        <SummaryPercentage>90,86%</SummaryPercentage>
-        <SummaryDescription>das refeições dentro da dieta</SummaryDescription>
-      </Header>
+    <Container>
+      <Header isSummary />      
 
       <Details>
         <Title>Estatísticas gerais</Title>

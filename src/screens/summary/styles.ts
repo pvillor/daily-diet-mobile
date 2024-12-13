@@ -1,4 +1,3 @@
-import { ArrowLeft } from "phosphor-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
@@ -10,35 +9,6 @@ export const Container = styled(SafeAreaView)<SummaryProps>`
   flex: 1;
 
   background-color: ${({ theme, isFollowingDiet = true }) => isFollowingDiet ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
-`
-
-export const Header = styled.View`
-  height: 136px;
-
-  position: relative;
-
-  justify-content: center;
-  gap: 2px;
-`
-
-export const SummaryPercentage = styled.Text`
-  font-size: ${({ theme }) => theme.FONT_SIZE["2XL"]}px;
-  font-weight: bold;
-  text-align: center;
-`
-
-export const SummaryDescription = styled.Text`
-  font-size: ${({ theme }) => theme.FONT_SIZE.SM}px;
-  text-align: center;
-`
-
-export const ExitSummaryIcon = styled(ArrowLeft).attrs<SummaryProps>(({ theme, isFollowingDiet = true }) => ({
-  color: isFollowingDiet ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
-  size: 24
-}))`
-  position: absolute;
-  top: 24px;
-  left: 24px;
 `
 
 export const Details = styled.View`

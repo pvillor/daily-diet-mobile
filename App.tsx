@@ -6,7 +6,7 @@ import theme from '@theme/index';
 import { Loading } from '@components/loading';
 import { Meals } from '@screens/meals';
 import { Summary } from '@screens/summary';
-import { CreateGroup } from '@screens/create-meal';
+import { CreateMeal } from '@screens/create-meal';
 
 export function App() {
   const [isFontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold })
@@ -18,7 +18,7 @@ export function App() {
         backgroundColor="transparent"
         translucent
       />
-      {isFontsLoaded ? <CreateGroup /> : <Loading />}
+      {isFontsLoaded ? <Summary /> : <Loading />}
     </ThemeProvider>
   );
 }

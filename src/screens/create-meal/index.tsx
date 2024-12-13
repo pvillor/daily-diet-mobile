@@ -1,10 +1,11 @@
 import { Input } from "@components/input";
-import { ColumnLabel, Container, CreateMealButton, ExitCreateMealIcon, Form, Header, Label, RowLabels, Title } from "./styles";
+import { ColumnLabel, Container, CreateMealButton, Form, Label, RowLabels } from "./styles";
 import { Text, View } from "react-native";
 import { OptionButton } from "@components/option-button";
 import { useState } from "react";
+import { Header } from "@components/header";
 
-export function CreateGroup() {
+export function CreateMeal() {
   const [isWithinDietOptionSelected, setIsWithinDietOptionSelected] = useState(false)
   const [isNotWithinDietOptionSelected, setIsNotWithinDietOptionSelected] = useState(false)
 
@@ -26,12 +27,8 @@ export function CreateGroup() {
 
   return (
     <Container>
-      <Header>
-        <ExitCreateMealIcon />
-
-        <Title>Nova refeição</Title>
-      </Header>
-
+      <Header />
+      
       <Form>
         <Label>
           <Text style={{ fontWeight: 'bold' }}>Nome</Text>
