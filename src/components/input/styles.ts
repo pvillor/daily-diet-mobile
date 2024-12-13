@@ -3,6 +3,7 @@ import styled, { css } from "styled-components/native";
 
 export const Container = styled(TextInput)`
   min-height: 48px;
+  text-align: start;
 
   ${({ theme }) => css`
     font-family: ${theme.FONT_FAMILY.REGULAR};

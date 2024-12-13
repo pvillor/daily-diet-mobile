@@ -27,7 +27,7 @@ export const ExitCreateMealIcon = styled(ArrowLeft).attrs(({ theme }) => ({
 
 export const Title = styled.Text`
   text-align: center;
-  font-size: ${({ theme }) => theme.FONT_SIZE.MD};
+  font-size: ${({ theme }) => theme.FONT_SIZE.MD}px;
   font-weight: bold;
 
   margin-top: 32px;
@@ -57,4 +57,16 @@ export const RowLabels = styled.View`
 
 export const ColumnLabel = styled(Label)`
   flex: 1;
+`
+
+export const CreateMealButton = styled.TouchableOpacity`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    gap: 12px;
+
+    background: ${({ theme }) => theme.COLORS.GRAY_600};
+    border-radius: 6px;
 `
