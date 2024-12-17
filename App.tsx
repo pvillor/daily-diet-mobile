@@ -8,6 +8,7 @@ import { Meals } from '@screens/meals';
 import { Summary } from '@screens/summary';
 import { CreateMeal } from '@screens/create-meal';
 import { Feedback } from '@screens/feedback';
+import { MealDetails } from '@screens/meal-details';
 
 export function App() {
   const [isFontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold })
@@ -19,7 +20,7 @@ export function App() {
         backgroundColor="transparent"
         translucent
       />
-      {isFontsLoaded ? <Feedback isWithinDiet={false} /> : <Loading />}
+      {isFontsLoaded ? <MealDetails isWithinDiet={false} /> : <Loading />}
     </ThemeProvider>
   );
 }

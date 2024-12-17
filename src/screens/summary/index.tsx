@@ -4,7 +4,7 @@ import { Container, Count, CountContainer, CountDescription, Details, DietMealsD
 export function Summary() {
   return (
     <Container>
-      <Header isSummary />      
+      <Header isSummary title="99%" description="das refeições dentro da dieta" />      
 
       <Details>
         <Title>Estatísticas gerais</Title>

@@ -2,21 +2,23 @@ import { View } from "react-native";
 import { Container, ExitIcon, ExitSummaryIcon, SummaryDescription, SummaryPercentage, Title } from "./styles";
 
 interface HeaderProps {
-  isSummary?: boolean 
+  isSummary?: boolean
+  title: string
+  description?: string
 }
 
-export function Header({ isSummary = false }: HeaderProps){
+export function Header({ isSummary = false, title, description }: HeaderProps){
   return (
     <Container>
         {isSummary ? <ExitSummaryIcon /> : <ExitIcon />}
 
         {isSummary ? (
           <View style={{ gap: 2 }}>
-            <SummaryPercentage>90,86%</SummaryPercentage>
-            <SummaryDescription>das refeições dentro da dieta</SummaryDescription>
+            <SummaryPercentage>{title}</SummaryPercentage>
+            <SummaryDescription>{description}</SummaryDescription>
           </View>
         ) : (          
-          <Title>Nova refeição</Title>
+          <Title>{title}</Title>
         )}
     </Container>
   )

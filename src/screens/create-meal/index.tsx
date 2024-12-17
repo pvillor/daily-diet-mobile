@@ -27,7 +27,7 @@ export function CreateMeal() {
 
   return (
     <Container>
-      <Header />
+      <Header title="Nova refeição" />
       
       <Form>
         <Label>
