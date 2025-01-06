@@ -1,12 +1,23 @@
 import { Header } from "@components/header";
 import { ActionButton, ActionButtonPencilIcon, ActionButtonTitle, ActionButtonTrashIcon, Container, Details, MealDatetimeTitle, MealDescription, MealName, MealType, MealTypeIcon } from "./styles";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 
 export interface MealDetailsProps {
   isWithinDiet?: boolean
 }
 
 export function MealDetails({ isWithinDiet = true }: MealDetailsProps) {
+  function handleDeleteMeal() {
+    Alert.alert(
+      '', 
+      'Deseja realmente excluir o registro da refeição?',
+      [
+        { style: 'cancel', text: 'Cancelar' },
+        { text: 'Sim, excluir', onPress: () => {} },
+      ]
+    )
+  }
+
   return (
     <Container isWithinDiet={isWithinDiet}>
       <Header title="Refeição" />
@@ -34,8 +45,9 @@ export function MealDetails({ isWithinDiet = true }: MealDetailsProps) {
             <ActionButtonPencilIcon />
             <ActionButtonTitle>Editar refeição</ActionButtonTitle>
           </ActionButton>
-          <ActionButton variant="secondary">
-            <ActionButtonTrashIcon />
+
+          <ActionButton variant="secondary" onPress={handleDeleteMeal}>
+            <ActionButtonTrashIcon variant="secondary" />
             <ActionButtonTitle variant="secondary">Excluir refeição</ActionButtonTitle>
           </ActionButton>
         </View>
