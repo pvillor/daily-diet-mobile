@@ -1,12 +1,19 @@
 import { Header } from "@components/header";
 import { ActionButton, ActionButtonPencilIcon, ActionButtonTitle, ActionButtonTrashIcon, Container, Details, MealDatetimeTitle, MealDescription, MealName, MealType, MealTypeIcon } from "./styles";
 import { Alert, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export interface MealDetailsProps {
-  isWithinDiet?: boolean
+interface MealDetailsProps {
+  id: string
 }
 
-export function MealDetails({ isWithinDiet = true }: MealDetailsProps) {
+export function MealDetails({ id }: MealDetailsProps) {
+  const navigation = useNavigation()
+
+  function handleEditMeal() {
+    navigation.navigate('edit-meal', { id })
+  }
+
   function handleDeleteMeal() {
     Alert.alert(
       '', 
@@ -19,7 +26,7 @@ export function MealDetails({ isWithinDiet = true }: MealDetailsProps) {
   }
 
   return (
-    <Container isWithinDiet={isWithinDiet}>
+    <Container isWithinDiet={true}>
       <Header title="Refeição" />
 
       <Details>
@@ -35,13 +42,13 @@ export function MealDetails({ isWithinDiet = true }: MealDetailsProps) {
           </View>
 
           <MealType>
-            <MealTypeIcon isWithinDiet={isWithinDiet} />
+            <MealTypeIcon isWithinDiet={true} />
             <Text>dentro da dieta</Text>
           </MealType>
         </View>
 
         <View style={{ gap: 8 }}>
-          <ActionButton>
+          <ActionButton onPress={handleEditMeal}>
             <ActionButtonPencilIcon />
             <ActionButtonTitle>Editar refeição</ActionButtonTitle>
           </ActionButton>

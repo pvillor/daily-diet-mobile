@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { Container, ExitIcon, ExitSummaryIcon, SummaryDescription, SummaryPercentage, Title } from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
 interface HeaderProps {
   isSummary?: boolean
@@ -8,8 +9,14 @@ interface HeaderProps {
 }
 
 export function Header({ isSummary = false, title, description }: HeaderProps){
+  const navigation = useNavigation()
+
+  function handleGoBack() {
+    navigation.navigate('meals')
+  }
+
   return (
-    <Container>
+    <Container onPress={handleGoBack}>
         {isSummary ? <ExitSummaryIcon /> : <ExitIcon />}
 
         {isSummary ? (

@@ -1,20 +1,30 @@
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Container, MealDetails, MealDetailsDivisor, MealHour, MealTitle, MealTypeIndicator } from "./style";
 
 interface MealProps {
-  meal: string
-  isWithinDiet?: boolean
+  meal: {
+    id: string
+    name: string
+    isWithinDiet: boolean
+  }
 }
 
-export function Meal({ meal, isWithinDiet = true }: MealProps) {
+export function Meal({ meal }: MealProps) {
+  const navigation = useNavigation()
+
+  function handleShowMealDetails() {
+    navigation.navigate('meal-details', { id: meal.id })
+  }
+
   return (
-    <Container>
+    <Container onPress={handleShowMealDetails}>
       <MealDetails>
         <MealHour>20:00</MealHour>
         <MealDetailsDivisor />
-        <MealTitle>{meal}</MealTitle>
+        <MealTitle>{meal.name}</MealTitle>
       </MealDetails>
 
-      <MealTypeIndicator isWithinDiet={isWithinDiet} />
+      <MealTypeIndicator isWithinDiet={meal.isWithinDiet} />
     </Container>
   )
 }

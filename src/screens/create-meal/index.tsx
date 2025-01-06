@@ -4,10 +4,13 @@ import { Text, View } from "react-native";
 import { OptionButton } from "@components/option-button";
 import { useState } from "react";
 import { Header } from "@components/header";
+import { useNavigation } from "@react-navigation/native";
 
 export function CreateMeal() {
   const [isWithinDietOptionSelected, setIsWithinDietOptionSelected] = useState(false)
   const [isNotWithinDietOptionSelected, setIsNotWithinDietOptionSelected] = useState(false)
+
+  const navigation = useNavigation()
 
   function handleSelectIsWithinDiet() {
     setIsWithinDietOptionSelected(!isWithinDietOptionSelected)
@@ -23,6 +26,10 @@ export function CreateMeal() {
     if(isWithinDietOptionSelected) {
       setIsWithinDietOptionSelected(!isWithinDietOptionSelected)
     }
+  }
+
+  function handleCreate() {
+    navigation.navigate('feedback', { isWithinDiet: true })
   }
 
   return (
@@ -66,7 +73,7 @@ export function CreateMeal() {
           </RowLabels>
         </View>
 
-        <CreateMealButton>
+        <CreateMealButton onPress={handleCreate}>
           <Text style={{ color: '#FFFFFF', fontWeight: 'semibold', fontSize: 14 }}>Cadastrar refeição</Text>
         </CreateMealButton>
       </Form>

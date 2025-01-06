@@ -5,8 +5,19 @@ import logo from "@assets/logo.png";
 import ore from "@assets/ore.png";
 import { Plus } from "phosphor-react-native";
 import { Meal } from "@components/meal";
+import { useNavigation } from "@react-navigation/native";
 
 export function Meals() {
+  const navigation = useNavigation()
+
+  function handleShowSummary() {
+    navigation.navigate('summary')
+  }
+
+  function handleCreateMeal() {
+    navigation.navigate('create-meal')
+  }
+
   return (
     <Container>
       <Header>
@@ -17,7 +28,7 @@ export function Meals() {
         </TouchableOpacity>
       </Header>
 
-      <DietSummary>
+      <DietSummary onPress={handleShowSummary}>
         <DietSummaryDetailsLinkIcon />
 
         <DietSummaryPercentage>90,86%</DietSummaryPercentage>
@@ -27,15 +38,31 @@ export function Meals() {
       <View style={{ gap: 32 }}>
         <View style={{ width: '100%', gap: 8 }}>
           <Text>Refeições</Text>
-          <NewMealButton>
+          <NewMealButton onPress={handleCreateMeal}>
             <Plus size={18} color="#FFF" />
             <NewMealText style={{ color: '#FFF'}}>Nova refeição</NewMealText>
           </NewMealButton>
         </View>
 
         <FlatList
-          data={['meal', 'meal2', 'meal3']}
-          keyExtractor={item => item}
+          data={[
+            {
+              id: '1',
+              name: 'meal1',
+              isWithinDiet: true
+            },
+            {
+              id: '2',
+              name: 'meal2',
+              isWithinDiet: true
+            },
+            {
+              id: '3',
+              name: 'meal3',
+              isWithinDiet: false
+            },
+        ]}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <Meal meal={item} />
           )}
