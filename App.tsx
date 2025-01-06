@@ -9,6 +9,7 @@ import { Summary } from '@screens/summary';
 import { CreateMeal } from '@screens/create-meal';
 import { Feedback } from '@screens/feedback';
 import { MealDetails } from '@screens/meal-details';
+import { EditMeal } from '@screens/edit-meal';
 
 export function App() {
   const [isFontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold })
@@ -20,7 +21,7 @@ export function App() {
         backgroundColor="transparent"
         translucent
       />
-      {isFontsLoaded ? <MealDetails isWithinDiet={false} /> : <Loading />}
+      {isFontsLoaded ? <EditMeal name='X-tudo' description='Sanduíche de pão integral com atum e salada de alface e tomate' ateAt={new Date().toISOString()} isWithinDiet={true} /> : <Loading />}
     </ThemeProvider>
   );
 }
