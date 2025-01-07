@@ -3,23 +3,29 @@ import { ColumnLabel, Container, CreateMealButton, Form, Label, RowLabels } from
 import { Input } from "@components/input"
 import { Text, View } from "react-native"
 import { OptionButton } from "@components/option-button"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { findMeal } from "@storage/meal/find-meal"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { Meal } from "@storage/meal/list-meals"
+import { updateMeal } from "@storage/meal/update-meal"
 
-interface EditMealProps {
-  name: string
-  description: string
-  ateAt: string
-  isWithinDiet: boolean
+interface EditMealParams {
+  id: string
 }
 
-export function EditMeal({ name, description, ateAt, isWithinDiet }: EditMealProps) {
-  const [isWithinDietOptionSelected, setIsWithinDietOptionSelected] = useState(isWithinDiet === true)
-  const [isNotWithinDietOptionSelected, setIsNotWithinDietOptionSelected] = useState(isWithinDiet === false)
+export function EditMeal() {
+  const [meal, setMeal] = useState<Meal>()
+  const [isWithinDietOptionSelected, setIsWithinDietOptionSelected] = useState(false)
+  const [isNotWithinDietOptionSelected, setIsNotWithinDietOptionSelected] = useState(false)
 
-  const mealDatetime = {
-    date: ateAt.split('T')[0],
-    time: ateAt.split('T')[1].substring(0, 5)
-  }
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
+
+  const navigation = useNavigation()
+  const route = useRoute()
+  const { id } = route.params as EditMealParams
 
   function handleSelectIsWithinDiet() {
     setIsWithinDietOptionSelected(!isWithinDietOptionSelected)
@@ -37,6 +43,39 @@ export function EditMeal({ name, description, ateAt, isWithinDiet }: EditMealPro
     }
   }
 
+  function handleEditMeal() {
+    const convertDate = new Date(date.split('/').reverse().join('-'))
+    const [hour, minutes] = time.split(':')
+    convertDate.setHours(Number(hour) - 4, Number(minutes))
+
+    updateMeal(id, name, description, convertDate, isWithinDietOptionSelected ? true : false)
+    navigation.navigate('meal-details', { id })
+  } 
+
+  useEffect(() => {
+    if(meal) {
+      setName(meal.name)
+      setDescription(meal.description)
+      setDate(meal.ateAt.split('T')[0].split('-').reverse().join('/')),
+      setTime(meal.ateAt.split('T')[1].substring(0, 5))
+      
+      meal.isWithinDiet ? setIsWithinDietOptionSelected(true) : setIsNotWithinDietOptionSelected(true)
+    }
+  }, [meal])
+
+  async function getMeal() {
+    const foundMeal = await findMeal(id)
+    setMeal(foundMeal)
+  }
+
+  useEffect(() => {
+    getMeal()
+  }, [])
+  
+  if(!meal) {
+    return null
+  }
+
   return (
     <Container>
       <Header title="Editar refeição" />
@@ -44,23 +83,23 @@ export function EditMeal({ name, description, ateAt, isWithinDiet }: EditMealPro
       <Form>
         <Label>
           <Text style={{ fontWeight: 'bold' }}>Nome</Text>
-          <Input value={name} />
+          <Input value={name} defaultValue={name} onChangeText={setName} />
         </Label>
         
         <Label>
           <Text style={{ fontWeight: 'bold' }}>Descrição</Text>
-          <Input style={{ paddingBottom: 92 }} value={description} />
+          <Input style={{ paddingBottom: 92 }} defaultValue={description} value={description} onChangeText={setDescription} />
         </Label>
         
         <RowLabels style={{ gap: 20 }}>
           <ColumnLabel>
             <Text style={{ fontWeight: 'bold' }}>Data</Text>
-            <Input value={mealDatetime.date} />
+            <Input keyboardType="number-pad" type="date" returnKeyType="done" maxLength={10} value={date} onChangeText={setDate} />
           </ColumnLabel>
 
           <ColumnLabel>
             <Text style={{ fontWeight: 'bold' }}>Hora</Text>
-            <Input value={mealDatetime.time} />
+            <Input keyboardType="number-pad" type="time" returnKeyType="done" maxLength={5} value={time} onChangeText={setTime} />
           </ColumnLabel>
         </RowLabels>
         
@@ -78,7 +117,7 @@ export function EditMeal({ name, description, ateAt, isWithinDiet }: EditMealPro
           </RowLabels>
         </View>
 
-        <CreateMealButton>
+        <CreateMealButton onPress={handleEditMeal}>
           <Text style={{ color: '#FFFFFF', fontWeight: 'semibold', fontSize: 14 }}>Salvar alterações</Text>
         </CreateMealButton>
       </Form>
