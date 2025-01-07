@@ -3,18 +3,28 @@ import { ActionButton, ActionButtonPencilIcon, ActionButtonTitle, ActionButtonTr
 import { Alert, Text, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { removeMealFromStorage } from "@storage/meal/remove-meal";
+import { findMeal } from "@storage/meal/find-meal";
+import { useEffect, useState } from "react";
+import { Meal } from "@storage/meal/list-meals";
 
 interface MealDetailsParams {
   id: string
 }
 
 export function MealDetails() {
+  const [meal, setMeal] = useState<Meal>()
+
   const navigation = useNavigation()
   const route = useRoute()
   const { id } = route.params as MealDetailsParams
 
   function handleEditMeal() {
     navigation.navigate('edit-meal', { id })
+  }
+
+  async function getMeal() {
+    const foundMeal = await findMeal(id)
+    setMeal(foundMeal)
   }
 
   async function deleteMeal() {
@@ -33,25 +43,36 @@ export function MealDetails() {
     )
   }
 
+  useEffect(() => {
+    getMeal()
+  }, [])
+
+  if(!meal) {
+    return null
+  }
+
+  const date = meal.ateAt.split('T')[0].split('-').reverse().join('/')
+  const [hour, minutes] = meal.ateAt.split('T')[1].split(':')
+
   return (
-    <Container isWithinDiet={true}>
+    <Container isWithinDiet={meal.isWithinDiet}>
       <Header title="Refeição" />
 
       <Details>
-        <View style={{ gap: 24 }}>
+        <View style={{ gap: 24, alignItems: 'flex-start' }}>
           <View style={{ gap: 8 }}>
-            <MealName>Sanduíche</MealName>
-            <MealDescription>Sanduíche de pão integral com atum e salada{"\n"}de alface e tomate</MealDescription>
+            <MealName>{meal.name}</MealName>
+            <MealDescription>{meal.description}</MealDescription>
           </View>
 
           <View style={{ gap: 8 }}>
             <MealDatetimeTitle>Data e hora</MealDatetimeTitle>
-            <MealDescription>12/08/2022 às 16:00</MealDescription>
+              <MealDescription>{date} às {hour}:{minutes}</MealDescription>
           </View>
 
           <MealType>
-            <MealTypeIcon isWithinDiet={true} />
-            <Text>dentro da dieta</Text>
+            <MealTypeIcon isWithinDiet={meal.isWithinDiet} />
+            <Text>{meal.isWithinDiet ? 'dentro' : 'fora'} da dieta</Text>
           </MealType>
         </View>
 

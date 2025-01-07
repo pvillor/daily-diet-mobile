@@ -16,7 +16,6 @@ export function AppRoutes() {
         component={Meals}
       />
 
-      
       <Screen 
         name="summary"
         component={Summary}

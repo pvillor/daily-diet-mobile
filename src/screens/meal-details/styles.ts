@@ -1,6 +1,9 @@
 import styled from "styled-components/native";
-import { MealDetailsProps } from ".";
 import { Circle, PencilSimple, Trash } from "phosphor-react-native";
+
+interface MealDetailsProps {
+  isWithinDiet: boolean
+}
 
 export const Container = styled.View<MealDetailsProps>`
   flex: 1;
@@ -36,7 +39,6 @@ export const MealDatetimeTitle = styled.Text`
 `
 
 export const MealType = styled.View`
-  max-width: 144px;
   padding: 8px 16px;
   background-color: ${({ theme }) => theme.COLORS.GRAY_200};
   border-radius: 999px;

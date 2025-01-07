@@ -4,6 +4,7 @@ import { MEAL_COLLECTION } from "@storage/storage-config";
 export interface Meal {
   id: string
   name: string
+  description: string
   ateAt: string
   isWithinDiet: boolean
 }

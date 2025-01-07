@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MEAL_COLLECTION } from "@storage/storage-config";
 import { listMeals } from "./list-meals";
 
-export async function createMeal(name: string, ateAt: Date, isWithinDiet: boolean) {
+export async function createMeal(name: string, description: string, ateAt: Date, isWithinDiet: boolean) {
   try {
     const storedMeals = await listMeals()
 
@@ -23,6 +23,7 @@ export async function createMeal(name: string, ateAt: Date, isWithinDiet: boolea
     const storage = JSON.stringify([...storedMeals, {
       id: String(findLastId() + 1),
       name,
+      description,
       ateAt,
       isWithinDiet
     }])
