@@ -5,6 +5,7 @@ interface MealProps {
   meal: {
     id: string
     name: string
+    ateAt: Date
     isWithinDiet: boolean
   }
 }
@@ -19,7 +20,7 @@ export function Meal({ meal }: MealProps) {
   return (
     <Container onPress={handleShowMealDetails}>
       <MealDetails>
-        <MealHour>20:00</MealHour>
+        <MealHour>{meal.ateAt.getHours()}</MealHour>
         <MealDetailsDivisor />
         <MealTitle>{meal.name}</MealTitle>
       </MealDetails>

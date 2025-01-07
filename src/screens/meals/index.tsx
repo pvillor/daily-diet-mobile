@@ -6,8 +6,12 @@ import ore from "@assets/ore.png";
 import { Plus } from "phosphor-react-native";
 import { Meal } from "@components/meal";
 import { useNavigation } from "@react-navigation/native";
+import { listMeals, Meal as IMeal } from "@storage/meal/list-meals";
+import { useEffect, useState } from "react";
 
 export function Meals() {
+  const [meals, setMeals] = useState<IMeal[]>([])
+
   const navigation = useNavigation()
 
   function handleShowSummary() {
@@ -17,6 +21,15 @@ export function Meals() {
   function handleCreateMeal() {
     navigation.navigate('create-meal')
   }
+
+  async function fetchMeals() {
+    const data = await listMeals()
+    setMeals(data)
+  }
+
+  useEffect(() => {
+    fetchMeals()
+  }, [meals])
 
   return (
     <Container>
@@ -45,23 +58,7 @@ export function Meals() {
         </View>
 
         <FlatList
-          data={[
-            {
-              id: '1',
-              name: 'meal1',
-              isWithinDiet: true
-            },
-            {
-              id: '2',
-              name: 'meal2',
-              isWithinDiet: true
-            },
-            {
-              id: '3',
-              name: 'meal3',
-              isWithinDiet: false
-            },
-        ]}
+          data={meals}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <Meal meal={item} />
