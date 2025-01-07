@@ -1,14 +1,20 @@
 import { Input } from "@components/input";
 import { ColumnLabel, Container, CreateMealButton, Form, Label, RowLabels } from "./styles";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { OptionButton } from "@components/option-button";
 import { useState } from "react";
 import { Header } from "@components/header";
 import { useNavigation } from "@react-navigation/native";
+import { createMeal } from "@storage/meal/create-meal";
 
 export function CreateMeal() {
   const [isWithinDietOptionSelected, setIsWithinDietOptionSelected] = useState(false)
   const [isNotWithinDietOptionSelected, setIsNotWithinDietOptionSelected] = useState(false)
+
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
 
   const navigation = useNavigation()
 
@@ -28,8 +34,17 @@ export function CreateMeal() {
     }
   }
 
-  function handleCreate() {
-    navigation.navigate('feedback', { isWithinDiet: true })
+  async function handleCreate() {
+    if(!name || !date || !time || (!isWithinDietOptionSelected && !isNotWithinDietOptionSelected)) {
+      return Alert.alert('Preencha todos os campos')
+    }
+
+    const convertDate = new Date(date.split('/').reverse().join('-'))
+    const [hour, minutes] = time.split(':')
+    convertDate.setHours(Number(hour), Number(minutes))
+    
+    createMeal(name, convertDate, isWithinDietOptionSelected ? true : false)
+    navigation.navigate('feedback', { isWithinDiet: isWithinDietOptionSelected ? true : false })
   }
 
   return (
@@ -39,23 +54,23 @@ export function CreateMeal() {
       <Form>
         <Label>
           <Text style={{ fontWeight: 'bold' }}>Nome</Text>
-          <Input />
+          <Input value={name} onChangeText={setName} />
         </Label>
         
         <Label>
           <Text style={{ fontWeight: 'bold' }}>Descrição</Text>
-          <Input style={{ height: 120 }} />
+          <Input style={{ paddingBottom: 92 }} value={description} onChangeText={setDescription} />
         </Label>
         
         <RowLabels style={{ gap: 20 }}>
           <ColumnLabel>
             <Text style={{ fontWeight: 'bold' }}>Data</Text>
-            <Input />
+            <Input keyboardType="number-pad" value={date} onChangeText={setDate} returnKeyType="done" type="date" maxLength={10} />
           </ColumnLabel>
 
           <ColumnLabel>
             <Text style={{ fontWeight: 'bold' }}>Hora</Text>
-            <Input />
+            <Input keyboardType="number-pad" value={time} onChangeText={setTime} returnKeyType="done" type="time" maxLength={5} />
           </ColumnLabel>
         </RowLabels>
         

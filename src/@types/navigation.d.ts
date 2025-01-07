@@ -4,7 +4,9 @@ export declare global {
       meals: undefined
       summary: undefined
       'create-meal': undefined
-      feedback: undefined
+      feedback: {
+        isWithinDiet: boolean
+      }
       'meal-details': {
         id: string
       }

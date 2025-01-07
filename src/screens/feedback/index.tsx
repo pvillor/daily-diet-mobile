@@ -4,14 +4,16 @@ import withinDiet from "@assets/within-diet.png";
 import outsideDiet from "@assets/outside-diet.png";
 
 import { BackButton, BackButtonTitle, Container, Header, Subtitle, Title } from "./styles";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-export interface FeedbackProps {
-  isWithinDiet?: boolean
+interface FeedbackParams {
+  isWithinDiet: boolean
 }
 
-export function Feedback({ isWithinDiet = true }: FeedbackProps) {
+export function Feedback() {
   const navigation = useNavigation()
+  const route = useRoute()
+  const { isWithinDiet } = route.params as FeedbackParams
 
   function handleNavigateToHome() {
     navigation.navigate('meals')
