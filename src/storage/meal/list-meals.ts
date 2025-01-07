@@ -13,7 +13,7 @@ export async function listMeals() {
     const storage = await AsyncStorage.getItem(MEAL_COLLECTION)
 
     const meals: Meal[] = storage ? JSON.parse(storage) : []
-
+    
     return meals
   } catch (error) {
     throw error

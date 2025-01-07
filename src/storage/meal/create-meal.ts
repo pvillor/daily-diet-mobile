@@ -6,10 +6,22 @@ export async function createMeal(name: string, ateAt: Date, isWithinDiet: boolea
   try {
     const storedMeals = await listMeals()
 
-    const biggestId = Math.max(...storedMeals.map(meal => Number(meal.id))) || 0
+    function findLastId() {
+      const { biggestId } = storedMeals.reduce((acc, meal) => {
+        if(Number(meal.id) > acc.biggestId) {
+          acc.biggestId = Number(meal.id)
+        }
+  
+        return acc
+      }, {
+        biggestId: 1
+      })
+  
+      return biggestId
+    }
 
     const storage = JSON.stringify([...storedMeals, {
-      id: String(biggestId + 1),
+      id: String(findLastId() + 1),
       name,
       ateAt,
       isWithinDiet

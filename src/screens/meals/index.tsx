@@ -29,7 +29,7 @@ export function Meals() {
 
   useEffect(() => {
     fetchMeals()
-  }, [meals])
+  }, [])
 
   return (
     <Container>
@@ -59,7 +59,7 @@ export function Meals() {
 
         <FlatList
           data={meals}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Meal meal={item} />
           )}

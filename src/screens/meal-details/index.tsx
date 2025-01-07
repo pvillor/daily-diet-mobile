@@ -1,17 +1,25 @@
 import { Header } from "@components/header";
 import { ActionButton, ActionButtonPencilIcon, ActionButtonTitle, ActionButtonTrashIcon, Container, Details, MealDatetimeTitle, MealDescription, MealName, MealType, MealTypeIcon } from "./styles";
 import { Alert, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { removeMealFromStorage } from "@storage/meal/remove-meal";
 
-interface MealDetailsProps {
+interface MealDetailsParams {
   id: string
 }
 
-export function MealDetails({ id }: MealDetailsProps) {
+export function MealDetails() {
   const navigation = useNavigation()
+  const route = useRoute()
+  const { id } = route.params as MealDetailsParams
 
   function handleEditMeal() {
     navigation.navigate('edit-meal', { id })
+  }
+
+  async function deleteMeal() {
+    await removeMealFromStorage(id)
+    navigation.navigate('meals')
   }
 
   function handleDeleteMeal() {
@@ -20,7 +28,7 @@ export function MealDetails({ id }: MealDetailsProps) {
       'Deseja realmente excluir o registro da refeição?',
       [
         { style: 'cancel', text: 'Cancelar' },
-        { text: 'Sim, excluir', onPress: () => {} },
+        { text: 'Sim, excluir', onPress: () => deleteMeal() },
       ]
     )
   }

@@ -41,7 +41,7 @@ export function CreateMeal() {
 
     const convertDate = new Date(date.split('/').reverse().join('-'))
     const [hour, minutes] = time.split(':')
-    convertDate.setHours(Number(hour), Number(minutes))
+    convertDate.setHours(Number(hour) - 4, Number(minutes))
     
     createMeal(name, convertDate, isWithinDietOptionSelected ? true : false)
     navigation.navigate('feedback', { isWithinDiet: isWithinDietOptionSelected ? true : false })
