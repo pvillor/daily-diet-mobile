@@ -6,9 +6,10 @@ interface HeaderProps {
   isSummary?: boolean
   title: string
   description?: string
+  isFollowingDiet?: boolean
 }
 
-export function Header({ isSummary = false, title, description }: HeaderProps){
+export function Header({ isSummary = false, title, description, isFollowingDiet }: HeaderProps){
   const navigation = useNavigation()
 
   function handleGoBack() {
@@ -17,7 +18,7 @@ export function Header({ isSummary = false, title, description }: HeaderProps){
 
   return (
     <Container onPress={handleGoBack}>
-        {isSummary ? <ExitSummaryIcon /> : <ExitIcon />}
+        {isSummary ? <ExitSummaryIcon isFollowingDiet={isFollowingDiet} /> : <ExitIcon />}
 
         {isSummary ? (
           <View style={{ gap: 2 }}>

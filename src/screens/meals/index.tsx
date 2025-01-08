@@ -31,6 +31,19 @@ export function Meals() {
     fetchMeals()
   }, [])
 
+  const { mealsWithinDiet } = meals.reduce((acc, meal) => {
+    if (!!meal.isWithinDiet) {
+      acc.mealsWithinDiet++
+    }
+
+    return acc
+  }, {
+    mealsWithinDiet: 0,
+  })
+
+  const mealsWithinDietPercentage = meals.length > 0 ? parseFloat(String((mealsWithinDiet / meals.length) * 100)).toFixed(2) : parseFloat('0').toFixed(2)
+  const isFollowingDiet = Number(mealsWithinDietPercentage) >= 50
+
   return (
     <Container>
       <Header>
@@ -41,10 +54,10 @@ export function Meals() {
         </TouchableOpacity>
       </Header>
 
-      <DietSummary onPress={handleShowSummary}>
-        <DietSummaryDetailsLinkIcon />
+      <DietSummary isFollowingDiet={isFollowingDiet} onPress={handleShowSummary}>
+        <DietSummaryDetailsLinkIcon isFollowingDiet={isFollowingDiet} />
 
-        <DietSummaryPercentage>90,86%</DietSummaryPercentage>
+        <DietSummaryPercentage>{mealsWithinDietPercentage || 0}%</DietSummaryPercentage>
         <DietSummaryDescription>das refeições dentro da dieta</DietSummaryDescription>
       </DietSummary>
 

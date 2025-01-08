@@ -26,14 +26,18 @@ export const Avatar = styled.Image`
   border: 2px solid ${({ theme }) => theme.COLORS.GRAY_200};
 `
 
-export const DietSummary = styled.TouchableOpacity`
+interface DietSummaryProps {
+  isFollowingDiet: boolean
+}
+
+export const DietSummary = styled.TouchableOpacity<DietSummaryProps>`
   width: 100%;
   padding: 20px 16px;
   margin-bottom: 40px;
 
   position: relative;
 
-  background-color: ${({ theme }) => theme.COLORS.GREEN_LIGHT};
+  background-color: ${({ theme, isFollowingDiet }) => isFollowingDiet ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 
   border-radius: 8px;
 
@@ -51,8 +55,8 @@ export const DietSummaryDescription = styled.Text`
   text-align: center;
 `
 
-export const DietSummaryDetailsLinkIcon = styled(ArrowUpRight).attrs(({ theme }) => ({
-  color: theme.COLORS.GREEN_DARK,
+export const DietSummaryDetailsLinkIcon = styled(ArrowUpRight).attrs<DietSummaryProps>(({ theme, isFollowingDiet }) => ({
+  color: isFollowingDiet ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
   size: 24
 }))`
   position: absolute;

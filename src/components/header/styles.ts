@@ -31,7 +31,7 @@ interface ExitSummaryIconProps {
   isFollowingDiet?: boolean
 }
 
-export const ExitSummaryIcon = styled(ExitIcon).attrs<ExitSummaryIconProps>(({ theme, isFollowingDiet = true }) => ({
+export const ExitSummaryIcon = styled(ExitIcon).attrs<ExitSummaryIconProps>(({ theme, isFollowingDiet }) => ({
   color: isFollowingDiet ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
 }))`
   top: 24px;
