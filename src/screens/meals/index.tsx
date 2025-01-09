@@ -1,5 +1,5 @@
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { Avatar, Container, DietSummaryPercentage, DietSummary, Header, DietSummaryDescription, DietSummaryDetailsLinkIcon, NewMealButton, NewMealText } from "./styles";
+import { Avatar, Container, DietSummaryPercentage, DietSummary, Header, DietSummaryDescription, DietSummaryDetailsLinkIcon, NewMealButton, NewMealText, MealDate } from "./styles";
 
 import logo from "@assets/logo.png";
 import ore from "@assets/ore.png";
@@ -31,14 +31,23 @@ export function Meals() {
     fetchMeals()
   }, [])
 
-  const { mealsWithinDiet } = meals.reduce((acc, meal) => {
+  const mealsSortedByDatetime = meals.sort((a, b) => new Date(b.ateAt).getTime() - new Date(a.ateAt).getTime())
+
+  const { mealsWithinDiet, mealsDatetimes } = mealsSortedByDatetime.reduce((acc, meal) => {
     if (!!meal.isWithinDiet) {
       acc.mealsWithinDiet++
+    }
+
+    const [date] = meal.ateAt.split('T')
+
+    if(!acc.mealsDatetimes.includes(date)) {
+      acc.mealsDatetimes.push(date)
     }
 
     return acc
   }, {
     mealsWithinDiet: 0,
+    mealsDatetimes: [] as string[]
   })
 
   const mealsWithinDietPercentage = meals.length > 0 ? parseFloat(String((mealsWithinDiet / meals.length) * 100)).toFixed(2) : parseFloat('0').toFixed(2)
@@ -71,11 +80,25 @@ export function Meals() {
         </View>
 
         <FlatList
-          data={meals}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Meal meal={item} />
-          )}
+          data={mealsDatetimes}
+          keyExtractor={(date) => date}
+          renderItem={({ item: date }) => {
+            const [day, month, year] = date.split('-').reverse()
+            const formattedDate = `${day}.${month}.${year.substring(2, 4)}`
+
+            return (
+              <View style={{ marginBottom: 16, gap: 8 }}>
+                <MealDate>{formattedDate}</MealDate>
+                <FlatList
+                  data={meals.filter((meal) => meal.ateAt.split('T')[0] === date)}
+                  keyExtractor={(meal) => meal.id}
+                  renderItem={({ item: meal }) => (
+                      <Meal meal={meal} />
+                  )}
+                />
+              </View>
+            )
+          }}
         />
       </View>
     </Container>

@@ -64,6 +64,11 @@ export const DietSummaryDetailsLinkIcon = styled(ArrowUpRight).attrs<DietSummary
   right: 10px;
 `
 
+export const MealDate = styled.Text`
+  font-size: ${({ theme }) => theme.FONT_SIZE.LG}px;
+  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+`
+
 export const NewMealButton = styled.TouchableOpacity`
   width: 100%;
 
